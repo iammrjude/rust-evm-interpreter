@@ -94,8 +94,7 @@ fn jumpi_to_valid_jumpdest() {
 #[test]
 fn sdiv_handles_negative_values() {
     let mut code = vec![0x7f];
-    let mut neg_ten = [0u8; 32];
-    twos_complement_negative(10).to_big_endian(&mut neg_ten);
+    let neg_ten = twos_complement_negative(10).to_big_endian();
     code.extend(neg_ten);
     code.extend([0x60, 0x03, 0x05, 0x00]);
 
@@ -108,8 +107,7 @@ fn sdiv_handles_negative_values() {
 #[test]
 fn sar_sign_extends() {
     let mut code = vec![0x7f];
-    let mut neg_two = [0u8; 32];
-    twos_complement_negative(2).to_big_endian(&mut neg_two);
+    let neg_two = twos_complement_negative(2).to_big_endian();
     code.extend(neg_two);
     code.extend([0x60, 0x01, 0x1d, 0x00]);
 
@@ -125,8 +123,7 @@ fn calldata_copy_and_mload_work() {
     ];
     let result = run_with_calldata(code, vec![0xaa, 0xbb, 0xcc]);
     assert_eq!(result.status, ExitStatus::Stop);
-    let mut bytes = [0u8; 32];
-    result.stack[0].to_big_endian(&mut bytes);
+    let bytes = result.stack[0].to_big_endian();
     assert_eq!(&bytes[0..3], &[0xaa, 0xbb, 0xcc]);
 }
 

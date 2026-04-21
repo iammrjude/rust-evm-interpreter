@@ -1486,8 +1486,7 @@ pub fn format_u256(value: U256) -> String {
     if value.is_zero() {
         return "0x0".to_string();
     }
-    let mut bytes = [0u8; 32];
-    value.to_big_endian(&mut bytes);
+    let bytes = value.to_big_endian();
     let encoded = hex::encode(bytes);
     let trimmed = encoded.trim_start_matches('0');
     format!("0x{trimmed}")
@@ -1587,8 +1586,7 @@ fn create_address(creator: U256, nonce: u64) -> U256 {
 fn create2_address(creator: U256, salt: U256, init_code: &[u8]) -> U256 {
     let creator = address20(creator);
     let init_hash = keccak256(init_code);
-    let mut salt_bytes = [0u8; 32];
-    salt.to_big_endian(&mut salt_bytes);
+    let salt_bytes = salt.to_big_endian();
 
     let mut payload = Vec::with_capacity(1 + 20 + 32 + 32);
     payload.push(0xff);
@@ -1600,8 +1598,7 @@ fn create2_address(creator: U256, salt: U256, init_code: &[u8]) -> U256 {
 }
 
 fn address20(value: U256) -> [u8; 20] {
-    let mut full = [0u8; 32];
-    value.to_big_endian(&mut full);
+    let full = value.to_big_endian();
     let mut out = [0u8; 20];
     out.copy_from_slice(&full[12..32]);
     out
@@ -1681,8 +1678,7 @@ fn is_success_status(status: &ExitStatus) -> bool {
 }
 
 fn u512_to_u256(value: U512) -> U256 {
-    let mut bytes = [0u8; 64];
-    value.to_big_endian(&mut bytes);
+    let bytes = value.to_big_endian();
     U256::from_big_endian(&bytes[32..])
 }
 
@@ -1788,8 +1784,7 @@ fn exponent_byte_size(exponent: U256) -> usize {
     if exponent.is_zero() {
         return 0;
     }
-    let mut bytes = [0u8; 32];
-    exponent.to_big_endian(&mut bytes);
+    let bytes = exponent.to_big_endian();
     let first_non_zero = bytes.iter().position(|b| *b != 0).unwrap_or(31);
     32 - first_non_zero
 }

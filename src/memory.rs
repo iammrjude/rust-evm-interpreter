@@ -48,8 +48,7 @@ impl Memory {
     }
 
     pub fn mstore(&mut self, offset: usize, value: U256) {
-        let mut bytes = [0u8; 32];
-        value.to_big_endian(&mut bytes);
+        let bytes = value.to_big_endian();
         self.write_slice(offset, &bytes);
     }
 
