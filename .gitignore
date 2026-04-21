@@ -1,0 +1,10 @@
+/target
+
+# Rust backups
+**/*.rs.bk
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
