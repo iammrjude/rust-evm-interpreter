@@ -1,4 +1,4 @@
-# EVM Assignment (Rust)
+# Spec-Aligned Rust EVM Interpreter
 
 This project is a from-scratch educational EVM interpreter written in Rust
 and exposed as a CLI binary.
